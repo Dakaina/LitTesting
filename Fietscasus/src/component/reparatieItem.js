@@ -12,20 +12,19 @@ export class ReparatieItem extends LitElement{
         super();
 
         this.reparatieService = new ReparatieService();
-
         this.id = '';
-        this.reparatie = '';
     }
 
     _reparatieHtml(){
-        this.reparatie =  this.reparatieService.getReparatie(this.id);
-        if (this.reparatie !== undefined){
+        const reparatie = this.reparatieService.getReparatie(this.id);
+
+        if (reparatie !== undefined){
             return html`
-                <p>Voertuigsoort: ${this.reparatie.voertuig}</p>
-                <p>Datum gebracht: ${this.reparatie.datum}</p>
-                <p>Reparaties: ${this.reparatie.reparaties.join(", ")}</p>
-                <p>Info: ${this.reparatie.info}</p>
-                <p>Status: ${this.reparatie.status}</p>
+                <p>Voertuigsoort: ${reparatie.voertuig}</p>
+                <p>Datum gebracht: ${reparatie.datum}</p>
+                <p>Reparaties: ${reparatie.reparaties.join(", ")}</p>
+                <p>Info: ${reparatie.info}</p>
+                <p>Status: ${reparatie.status}</p>
         `
         }
     }

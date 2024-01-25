@@ -5,11 +5,16 @@ import {ReparatieEdit} from "./reparatieEdit.js";
 
 
 export class ReparatieOverview extends LitElement{
+    static get properties(){
+        return{
+
+        }
+    }
+
     constructor() {
         super();
 
         this.reparatieService = new ReparatieService();
-        this.allReparaties = this.reparatieService.getAllReparaties();
     }
 
     render() {
@@ -22,14 +27,14 @@ export class ReparatieOverview extends LitElement{
     }
 
     _renderReparaties(){
+        const allReparaties = this.reparatieService.getAllReparaties();
         const renderedReparaties = [];
-
-        this.allReparaties.forEach(reparatie => {
+        allReparaties.forEach(reparatie => {
             renderedReparaties.push(html`
                 <div id="reparatieDiv">
                     <reparatie-item id="${reparatie.id}"></reparatie-item>
                     <button @click="${() => this._handleDelete(reparatie.id)}">Verwijderen</button>
-                    <reparatie-edit id="${reparatie.id}"></reparatie-edit>
+                    <reparatie-edit id="${reparatie.id}" @updatereparatie="${this._handleUpdate}"></reparatie-edit>
                 </div>
             `)
         })
@@ -37,9 +42,12 @@ export class ReparatieOverview extends LitElement{
         return renderedReparaties;
     }
 
+    _handleUpdate(){
+        this.requestUpdate();
+    }
+
     _handleDelete(id){
         this.reparatieService.deleteReparatie(id);
-        this.allReparaties = this.reparatieService.getAllReparaties();
         this.requestUpdate();
     }
 

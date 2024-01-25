@@ -59,6 +59,12 @@ export class ReparatieEdit extends LitElement{
 
         this.reparatieService.updateReparatie(this.reparatie.id, this.reparatie.voertuig ,this.reparatie.reparaties, this.info, this.reparatie.datum, Status[this.status].status);
         this._handleEditWindow();
+        this._dispatchUpdateEvent();
+    }
+
+    _dispatchUpdateEvent(){
+        const event = new CustomEvent("updatereparatie", {bubbles: true, cancelable: false, composed: true});
+        this.dispatchEvent(event);
     }
 
     _handleEditWindow(){

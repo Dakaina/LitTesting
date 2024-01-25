@@ -18,9 +18,9 @@ export class ReparatieService{
         }
     }
 
-    _saveAllReparaties(){
+    async _saveAllReparaties(){
         const reparatiesString = JSON.stringify(this.reparaties)
-        localStorage.setItem(this.LOCAL_STORAGE_KEY, reparatiesString)
+        await localStorage.setItem(this.LOCAL_STORAGE_KEY, reparatiesString)
     }
 
     addReparatie(voertuig, reparaties, datum, status){
@@ -39,6 +39,7 @@ export class ReparatieService{
     }
 
     getAllReparaties(){
+        this._loadAllReparaties()
         return this.reparaties;
     }
 
@@ -53,7 +54,6 @@ export class ReparatieService{
                 reparatie.status = status;
             }
         });
-
         this._saveAllReparaties();
     }
 
