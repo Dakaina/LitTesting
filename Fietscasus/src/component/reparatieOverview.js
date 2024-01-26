@@ -30,11 +30,6 @@ export class ReparatieOverview extends LitElement{
     _renderReparaties(){
         const renderedReparaties = [];
         const template = document.querySelector("#reparatieTemplate").content
-        console.log(this.allReparaties)
-
-        console.log("render babyy")
-
-
 
         this.allReparaties.forEach(reparatie => {
             const section = document.createElement("section");
