@@ -63,7 +63,7 @@ export class ReparatieEdit extends LitElement{
     }
 
     _dispatchUpdateEvent(){
-        const event = new CustomEvent("updatereparatie", {bubbles: true, cancelable: false, composed: true});
+        const event = new CustomEvent("update-submit", {bubbles: true, cancelable: false, composed: true});
         this.dispatchEvent(event);
     }
 

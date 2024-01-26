@@ -7,6 +7,24 @@
     <title>Vite + Lit</title>
     <link rel="stylesheet" href="./src/index.css" />
     <script type="module" src="/src/component/reparatieOverview.js"></script>
+    <template id="reparatieTemplate">
+        <style>
+            #reparatieDiv{
+                border: 1px solid black;
+                margin: 10px;
+                padding: 10px;
+            }
+        </style>
+        <div id="reparatieDiv">
+            <p>Voertuigsoort: <slot name="voertuig"></slot></p>
+            <p>Datum gebracht: <slot name="datum"></slot></p>
+            <p>Reparaties: <slot name="reparaties"></slot></p>
+            <p>Info: <slot name="info"></slot></p>
+            <p>Status: <slot name="status"></slot></p>
+            <slot name="edit"></slot>
+            <slot name="delete"></slot>
+        </div>
+    </template>
 </head>
 <body>
 <reparatie-overview></reparatie-overview>

@@ -7,7 +7,7 @@ import {ReparatieEdit} from "./reparatieEdit.js";
 export class ReparatieOverview extends LitElement{
     static get properties(){
         return{
-
+            allReparaties: {type: Array}
         }
     }
 
@@ -15,6 +15,7 @@ export class ReparatieOverview extends LitElement{
         super();
 
         this.reparatieService = new ReparatieService();
+        this.allReparaties = this.reparatieService.getAllReparaties();
     }
 
     render() {
@@ -27,27 +28,49 @@ export class ReparatieOverview extends LitElement{
     }
 
     _renderReparaties(){
-        const allReparaties = this.reparatieService.getAllReparaties();
         const renderedReparaties = [];
-        allReparaties.forEach(reparatie => {
-            renderedReparaties.push(html`
-                <div id="reparatieDiv">
-                    <reparatie-item id="${reparatie.id}"></reparatie-item>
-                    <button @click="${() => this._handleDelete(reparatie.id)}">Verwijderen</button>
-                    <reparatie-edit id="${reparatie.id}" @updatereparatie="${this._handleUpdate}"></reparatie-edit>
-                </div>
-            `)
+        const template = document.querySelector("#reparatieTemplate").content
+        console.log(this.allReparaties)
+
+        console.log("render babyy")
+
+
+
+        this.allReparaties.forEach(reparatie => {
+            const section = document.createElement("section");
+            section.innerHTML = `
+                <span slot="voertuig">${reparatie.voertuig}</span>
+                <span slot="datum">${reparatie.datum}</span>
+                <span slot="reparaties">${reparatie.reparaties.join(", ")}</span>
+                <span slot="info">${reparatie.info}</span>
+                <span slot="status">${reparatie.status}</span>
+                <button slot="delete">Verwijderen</button>
+                <reparatie-edit slot="edit" id="${reparatie.id}"></reparatie-edit>
+            `
+
+            const verwijderButton = section.querySelector('button[slot="delete"]');
+            verwijderButton.addEventListener('click', () => {
+                this._handleDelete(reparatie.id);
+            });
+
+            const editButton = section.querySelector('reparatie-edit[slot="edit"]');
+            editButton.addEventListener('update-submit', this._handleUpdate.bind(this));
+
+            section.attachShadow({mode: 'open'}).appendChild(template.cloneNode(true))
+            renderedReparaties.push(section)
         })
 
         return renderedReparaties;
     }
 
-    _handleUpdate(){
+    _handleUpdate() {
+        this.allReparaties = this.reparatieService.getAllReparaties();
         this.requestUpdate();
     }
 
-    _handleDelete(id){
+    _handleDelete(id) {
         this.reparatieService.deleteReparatie(id);
+        this.allReparaties = this.reparatieService.getAllReparaties();
         this.requestUpdate();
     }
 
