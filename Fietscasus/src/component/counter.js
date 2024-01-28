@@ -30,6 +30,10 @@ export class SimpleCounter extends HTMLElement{
         this.render();
     }
 
+    disconnectedCallback(){
+        this._counterView.removeEventListener('mousedown', this._updateCounter.bind(this));
+    }
+
     _updateCounter(){
         this.value += this.DEFAULT_INCREMENT;
         this.render();
@@ -39,11 +43,6 @@ export class SimpleCounter extends HTMLElement{
         this._counterView.textContent = this.DEFAULT_LABEL + this.value;
         this._button.textContent = this.DEFAULT_BUTTON
     }
-
-    disconnectedCallback(){
-        this._counterView.removeEventListener('mousedown', this._updateCounter.bind(this));
-    }
-
 }
 
 customElements.define("click-counter", SimpleCounter);
