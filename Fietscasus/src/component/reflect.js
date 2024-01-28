@@ -3,7 +3,8 @@ import {html, LitElement} from "lit";
 export class NameShower extends LitElement{
     static get properties(){
         return {
-            id: {type: String, reflect: false},
+            id: {type: String, reflect: false, converter: (value) => { return value.toUpperCase();
+                }},
             name: {type: String, reflect: true}
         }
     }
