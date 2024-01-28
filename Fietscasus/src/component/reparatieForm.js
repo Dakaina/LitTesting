@@ -16,6 +16,9 @@ export class ReparatieForm extends LitElement{
     constructor() {
         super();
 
+        //Create van element
+        console.log("Yay ik wordt gecreate")
+
         this.reparatieService = new ReparatieService();
 
         this.fietsReparaties = ["Voorband", "Achterband", "Ketting", "Remmen", "Zadel", "Lampen","Stuur", "Pedalen", "Frame", "Algehele check"]
@@ -28,7 +31,39 @@ export class ReparatieForm extends LitElement{
         this.reparaties = [];
     }
 
+    connectedCallback() {
+        super.connectedCallback();
+
+        //Element in DOM gestopt
+        console.log("Ik zit eindelijk in de dom :)")
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+
+        //Element uit dom gehaald
+        console.log("Verwijderd... :(")
+    }
+
+    firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties);
+
+        //Opgeroepen na element zijn eerste render
+        console.log("First update ever yesss")
+    }
+
+    updated(_changedProperties) {
+        super.updated(_changedProperties);
+
+        //Elke update wordt dit aangeroepen
+        console.log("Damn another update")
+    }
+
+
     render(){
+        //Dit is wat in de DOM wordt gestopt aan het begin en bij elke update weer wordt opgeroepen
+        console.log("Ik kom in het begin en elke update weer voor :)")
+
         return html`
             <form id="form" @submit="${this._onSubmit}">
                 <h2>Voertuigsoort: </h2>
